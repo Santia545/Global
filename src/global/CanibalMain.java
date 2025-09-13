@@ -10,9 +10,8 @@ package global;
  */
 import javax.swing.*;
 import java.awt.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class Main {
+public class CanibalMain {
     static final int NUM_CANIBALES = 5;
     static final int CAPACIDAD_OLLA =3;
 
