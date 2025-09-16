@@ -4,6 +4,7 @@ import global.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class ServidorPalindromo extends JFrame implements PalindromoService {
         btnCargar = new JButton("Cargar texto");
         btnEnviar = new JButton("Enviar a clientes");
         btnLimpiar = new JButton("Limpiar");
-        comboAlgoritmo = new JComboBox<>(new String[]{"secuencial", "concurrente", "paralelo"});
+        comboAlgoritmo = new JComboBox<>(new String[] { "secuencial", "concurrente", "paralelo" });
         labelTotal = new JLabel("Total palíndromas: 0");
         labelTiempo = new JLabel("Tiempo total: 0 ms");
 
@@ -58,12 +59,17 @@ public class ServidorPalindromo extends JFrame implements PalindromoService {
     }
 
     private void cargarEjemplo() {
-        areaTexto.setText("Dabale arroz a la zorra el abad. Ana, la ruta natural. Luz azul. Oso. Reconocer. Salas. Somos. Otto. A mamá Roma le aviva el amor a mamá. La ruta nos aporto otro paso natural. ");
+        areaTexto.setText(
+                "Dabale arroz a la zorra el abad. Ana, la ruta natural. Luz azul. Oso. Reconocer. Salas. Somos. Otto. A mamá Roma le aviva el amor a mamá. La ruta nos aporto otro paso natural. ");
     }
 
     private void enviarAClientes() {
         String texto = areaTexto.getText();
-        if (texto.isEmpty()) return;
+        if (texto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Error: Texto vacío.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         String algoritmo = (String) comboAlgoritmo.getSelectedItem();
         areaResultados.setText("");
         resultadosParciales.clear();
@@ -88,6 +94,9 @@ public class ServidorPalindromo extends JFrame implements PalindromoService {
                     ex.printStackTrace();
                 }
             }).start();
+        } catch (NotBoundException exception) {
+            JOptionPane.showMessageDialog(this, "Error: Asegúrese de que ambos clientes estén en ejecución.",
+                    "Error de conexión", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -126,7 +135,11 @@ public class ServidorPalindromo extends JFrame implements PalindromoService {
         if (textosClientes.size() < 2) {
             // Espera activa simple (mejorable con wait/notify)
             while (textosClientes.size() < 2) {
-                try { Thread.sleep(100); } catch (InterruptedException e) { break; }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    break;
+                }
             }
         }
         // Unir textos y analizar
@@ -141,7 +154,7 @@ public class ServidorPalindromo extends JFrame implements PalindromoService {
         long fin = System.currentTimeMillis();
         // Limpiar para la siguiente ronda
         textosClientes.clear();
-        return new ResultadoServidor(pals.size(), fin-inicio);
+        return new ResultadoServidor(pals.size(), fin - inicio);
     }
 
     public static void main(String[] args) {

@@ -51,7 +51,7 @@ public class ClientePalindromo extends JFrame implements PalindromoService {
         btnLimpiar.addActionListener(e -> areaTexto.setText(""));
         btnEnviar.addActionListener(e -> enviarAlServidor());
 
-        setSize(700, 400);
+        setSize(1000, 400);
         setLocationRelativeTo(null);
         setVisible(true);
     }
