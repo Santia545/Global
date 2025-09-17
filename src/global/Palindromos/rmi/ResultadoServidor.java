@@ -1,4 +1,4 @@
-package global.rmi;
+package global.Palindromos.rmi;
 import java.io.Serializable;
 
 public class ResultadoServidor implements Serializable {

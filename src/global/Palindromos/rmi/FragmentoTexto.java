@@ -1,10 +1,10 @@
-package global.rmi;
+package global.Palindromos.rmi;
 import java.io.Serializable;
 
-public class TextoCliente implements Serializable {
+public class FragmentoTexto implements Serializable {
     private String texto;
-    private String algoritmo;
-    public TextoCliente(String texto, String algoritmo) {
+    private String algoritmo; // "secuencial", "concurrente", "paralelo"
+    public FragmentoTexto(String texto, String algoritmo) {
         this.texto = texto;
         this.algoritmo = algoritmo;
     }

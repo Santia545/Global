@@ -1,4 +1,4 @@
-package global;
+package global.Palindromos;
 
 import java.util.*;
 import java.util.concurrent.*;

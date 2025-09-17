@@ -1,4 +1,4 @@
-package global.rmi;
+package global.Palindromos.rmi;
 import java.io.Serializable;
 import java.util.List;
 

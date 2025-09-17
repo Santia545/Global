@@ -1,6 +1,5 @@
-package global;
+package global.Palindromos;
 
-import global.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -8,6 +7,9 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+
+import global.Palindromos.rmi.*;
+
 import java.awt.*;
 
 public class ClientePalindromo extends JFrame implements PalindromoService {

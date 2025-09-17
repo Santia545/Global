@@ -1,4 +1,4 @@
-package global.rmi;
+package global.Palindromos.rmi;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

@@ -1,6 +1,5 @@
-package global;
+package global.Palindromos;
 
-import global.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -11,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import javax.swing.*;
+
+import global.Palindromos.rmi.*;
+
 import java.awt.*;
 
 public class ServidorPalindromo extends JFrame implements PalindromoService {
@@ -151,7 +153,7 @@ public class ServidorPalindromo extends JFrame implements PalindromoService {
         }
         String textoUnido = sb.toString();
         long inicio = System.currentTimeMillis();
-        List<String> pals = global.PalindromoUtils.buscarPalindromas(textoUnido, algoritmo);
+        List<String> pals = global.Palindromos.PalindromoUtils.buscarPalindromas(textoUnido, algoritmo);
         long fin = System.currentTimeMillis();
         // Limpiar para la siguiente ronda
         textosClientes.clear();
