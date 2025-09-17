@@ -1,60 +1,9 @@
-package global;
+package global.Santa;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.concurrent.Semaphore;
 
-public class SantaMain {
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new SantaGUI());
-	}
-}
-
-class SantaGUI extends JFrame {
-	private final JLabel santaLabel;
-	private final JLabel[] renoLabels;
-	private final JLabel[] duendeLabels;
-	private final SantaClaus santa;
-	private final int NUM_RENOS = 9;
-	private final int NUM_DUENDES = 10;
-
-	public SantaGUI() {
-		setTitle("Problema de Santa Claus");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new BorderLayout());
-
-		JPanel panelEstados = new JPanel(new GridLayout(NUM_RENOS + NUM_DUENDES + 2, 1));
-		santaLabel = new JLabel("Santa: Durmiendo");
-		panelEstados.add(santaLabel);
-
-		renoLabels = new JLabel[NUM_RENOS];
-		for (int i = 0; i < NUM_RENOS; i++) {
-			renoLabels[i] = new JLabel("Reno-" + (i+1) + ": De vacaciones");
-			panelEstados.add(renoLabels[i]);
-		}
-
-		duendeLabels = new JLabel[NUM_DUENDES];
-		for (int i = 0; i < NUM_DUENDES; i++) {
-			duendeLabels[i] = new JLabel("Duende-" + (i+1) + ": Trabajando");
-			panelEstados.add(duendeLabels[i]);
-		}
-
-		add(panelEstados, BorderLayout.CENTER);
-		setSize(400, 600);
-		setLocationRelativeTo(null);
-		setVisible(true);
-
-		// Lógica de sincronización
-		santa = new SantaClaus(santaLabel, renoLabels, duendeLabels);
-		santa.start();
-		for (int i = 0; i < NUM_RENOS; i++) {
-			new Reno(i, santa, renoLabels[i]).start();
-		}
-		for (int i = 0; i < NUM_DUENDES; i++) {
-			new Duende(i, santa, duendeLabels[i]).start();
-		}
-	}
-}
+import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 
 class SantaClaus extends Thread {
 	private final JLabel santaLabel;
@@ -133,51 +82,5 @@ class SantaClaus extends Thread {
 		else duendesMutex.release();
 		mutex.release();
 		duendesSem.acquire();
-	}
-}
-
-class Reno extends Thread {
-	private final int id;
-	private final SantaClaus santa;
-	private final JLabel renoLabel;
-
-	public Reno(int id, SantaClaus santa, JLabel renoLabel) {
-		this.id = id;
-		this.santa = santa;
-		this.renoLabel = renoLabel;
-	}
-
-	public void run() {
-		try {
-			while (true) {
-				Thread.sleep((int)(Math.random() * 5000) + 2000); // Vacaciones
-				santa.renoLlega(id, renoLabel);
-			}
-		} catch (InterruptedException e) {
-			SwingUtilities.invokeLater(() -> renoLabel.setText("Reno-" + (id+1) + ": Interrumpido"));
-		}
-	}
-}
-
-class Duende extends Thread {
-	private final int id;
-	private final SantaClaus santa;
-	private final JLabel duendeLabel;
-
-	public Duende(int id, SantaClaus santa, JLabel duendeLabel) {
-		this.id = id;
-		this.santa = santa;
-		this.duendeLabel = duendeLabel;
-	}
-
-	public void run() {
-		try {
-			while (true) {
-				Thread.sleep((int)(Math.random() * 4000) + 1000); // Trabajando
-				santa.duendeProblema(id, duendeLabel);
-			}
-		} catch (InterruptedException e) {
-			SwingUtilities.invokeLater(() -> duendeLabel.setText("Duende-" + (id+1) + ": Interrumpido"));
-		}
 	}
 }
