@@ -103,6 +103,7 @@ public class ServidorPalindromo extends JFrame implements PalindromoService {
     }
 
     private void mostrarResultados(List<ResultadoCliente> resultados) {
+        long tiempoFin = System.currentTimeMillis();
         resultadosParciales = resultados;
         int total = 0;
         StringBuilder sb = new StringBuilder();
@@ -114,7 +115,7 @@ public class ServidorPalindromo extends JFrame implements PalindromoService {
         }
         areaResultados.setText(sb.toString());
         labelTotal.setText("Total palíndromas: " + total);
-        labelTiempo.setText("Tiempo total: " + (System.currentTimeMillis() - tiempoInicio) + " ms");
+        labelTiempo.setText("Tiempo total: " + (tiempoFin - tiempoInicio) + " ms");
     }
 
     // RMI: Procesar fragmento recibido de servidor
