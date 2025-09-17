@@ -72,7 +72,7 @@ public class ServidorPalindromo extends JFrame implements PalindromoService {
         }
         String algoritmo = (String) comboAlgoritmo.getSelectedItem();
         areaResultados.setText("");
-        resultadosParciales.clear();
+        resultadosParciales = new ArrayList<>();
         labelTotal.setText("Total palíndromas: 0");
         labelTiempo.setText("Tiempo total: 0 ms");
         // Simulación: dividir texto en 2 fragmentos

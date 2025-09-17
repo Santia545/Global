@@ -105,7 +105,7 @@ public class ClientePalindromo extends JFrame implements PalindromoService {
 
     public static void main(String[] args) {
         try {
-            String nombre = args.length > 0 ? args[0] : "Cliente1";
+            String nombre = args.length > 0 ? args[0] : "Cliente2";
             ClientePalindromo obj = new ClientePalindromo(nombre);
             PalindromoService stub = (PalindromoService) UnicastRemoteObject.exportObject(obj, 0);
             Registry registry = LocateRegistry.getRegistry();
